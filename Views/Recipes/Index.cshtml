@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@using RecipeBox.Models;
+@model IEnumerable<RecipeBox.Models.Recipe>
+
+<h2>RecipeBox for @User.Identity.Name</h2>
+
+@if (Model.Any())
+{
+  <ul>
+    @foreach (Recipe recipe in Model)
+    {
+      <li>@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId })</li>
+    }
+  </ul>
+} 
+else
+{
+  <h3>Your RecipeBox is empty!</h3>
+}
+
+<p>@Html.ActionLink("Add new Recipe", "Create")</p>
+
+<p>@Html.ActionLink("Home", "Index", "Home")</p>
+
+<input type="submit" class="btn btn-default" value="Log out" />

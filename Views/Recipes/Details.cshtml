@@ -1,0 +1,43 @@
+@{
+  Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Recipe
+
+<h2>Recipe Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+  @using (Html.BeginForm("MarkAsMadeIt", "Recipes", new { id = Model.RecipeId }))
+      {
+        <input type="submit" value="Made It?">
+      }
+
+@if(@Model.Tags.Count == 0)
+{
+  <p>This item does not have any Tags!</p>
+}
+else
+{
+  <h4>Tags:</h4>
+  <ul>
+  @foreach(var join in Model.Tags)
+  {
+    <li>@join.Tag.Word</li>
+    @using (Html.BeginForm("DeleteTag", "Recipes"))
+    {
+      @Html.Hidden("joinId", @join.RecipeTagId)
+      <input type="submit" value="Delete"/>
+    }
+  }
+  </ul>
+}
+<h4>How long? </h4>
+<h4>Rating: </h4>
+<h4>Ingredients: </h4>
+<h4>Instructions: </h4>
+
+
+
+<input type="submit" class="btn btn-default" value="Log out" />
+<p>@Html.ActionLink("Back to list", "Index")</p>
+<p>@Html.ActionLink("Edit Recipe", "Edit", new { id = Model.RecipeId })</p>
