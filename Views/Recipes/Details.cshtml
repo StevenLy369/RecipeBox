@@ -7,22 +7,27 @@
 <h2>Recipe Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+@if(@Model.MadeIt == false)
+{
   @using (Html.BeginForm("MarkAsMadeIt", "Recipes", new { id = Model.RecipeId }))
       {
         <input type="submit" value="Made It?">
       }
-
+}
+else
+{
+  <h4>You have made this before!</h4>
+}
 @if(@Model.Tags.Count == 0)
 {
   <p>This item does not have any Tags!</p>
 }
 else
 {
-  <h4>Tags:</h4>
   <ul>
   @foreach(var join in Model.Tags)
   {
-    <li>@join.Tag.Word</li>
+    <h3>Tags: @join.Tag.Word</h3>
     @using (Html.BeginForm("DeleteTag", "Recipes"))
     {
       @Html.Hidden("joinId", @join.RecipeTagId)
@@ -30,14 +35,16 @@ else
     }
   }
   </ul>
+  <h4>Prep Time: @Html.DisplayFor(model => model.Minutes) minutes </h4>
+  <h4>Rating: @Html.DisplayFor(model => model.Rating)</h4>
+  <h4>Ingredients: @Html.DisplayFor(model => model.Ingredients)</h4>
+  <h4>Instructions: @Html.DisplayFor(model => model.Instructions)</h4>
 }
-<h4>How long? </h4>
-<h4>Rating: </h4>
-<h4>Ingredients: </h4>
-<h4>Instructions: </h4>
 
 
+<p>@Html.ActionLink("Add a Tag", "AddTag", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Edit Recipe", "Edit", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Delete Recipe", "Delete", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Back to list", "Index")</p>
 
 <input type="submit" class="btn btn-default" value="Log out" />
-<p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Edit Recipe", "Edit", new { id = Model.RecipeId })</p>
