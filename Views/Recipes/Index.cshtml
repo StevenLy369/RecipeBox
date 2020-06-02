@@ -7,6 +7,16 @@
 
 <h2>RecipeBox for @User.Identity.Name</h2>
 
+<h4>Search Your RecipeBox: </h4>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Enter a Tag: @Html.TextBox("SearchString")  
+        <input type="submit" value="Search" /></p>
+}
+
+
 @if (Model.Any())
 {
   <ul>
