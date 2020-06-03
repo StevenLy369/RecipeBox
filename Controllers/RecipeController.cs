@@ -170,6 +170,22 @@ namespace RecipeBox.Controllers
       }
     }
 
+    public ActionResult Sort(string sortParam)
+    {
+      List<Recipe> model = _db.Recipes.ToList();
+      if (sortParam == "Rating")
+      {
+        model = model.OrderByDescending(r => r.Rating).ToList();
+      }
+      else
+      {
+        model = model.OrderBy(r => r.Minutes).ToList();
+      }
+      return View(model);
+    }
+
+
+
   }
 }
 
