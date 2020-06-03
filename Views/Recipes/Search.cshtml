@@ -25,7 +25,11 @@
     <p>Recipes Matching Your Search: </p>
     @foreach(RecipeTag recipetag in Model)
     {
-      <li>test</li>
+      <h5>@Html.DisplayFor(modelRecipeTag => recipetag.Recipe.Name)</h5>
+      <ul>
+        <li>Rating: @Html.DisplayFor(modelRecipeTag => recipetag.Recipe.Rating)</li>
+        <li>Prep Time: @Html.DisplayFor(modelRecipeTag => recipetag.Recipe.Minutes)</li>
+      </ul>
     }
   }
 

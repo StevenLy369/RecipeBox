@@ -105,7 +105,7 @@ namespace RecipeBox.Controllers
       {
         _db.RecipeTag.Add(new RecipeTag() { TagId = TagId, RecipeId = recipe.RecipeId });
       }
-      _db.Entry(recipe).State = EntityState.Modified;
+      _db.Entry(recipe).Collection(r => r.Tags).IsModified = true;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
@@ -142,23 +142,6 @@ namespace RecipeBox.Controllers
       {
         if (searchParam == "Tags")
         {
-          // List<Tag> model2 = _db.Tags.Include(Tags => Tags.Recipes).ToList();
-          // Tag match2 = new Tag();
-          // List<Tag> matches2 = new List<Tag> { };
-          // foreach (Tag tag in model2)
-          // {
-          //   if (tag.Word.ToLower().Contains(search))
-          //   {
-          //     matches2.Add(tag);
-          //   }
-          // }
-          // return View(matches2);
-
-          // var model = from t in _db.Tags select t;
-          // model = model.Where(t => t.Word.Contains(search));
-          // List<Tag> matches = model.ToList();
-          // return View(matches);
-
           var thisTag = _db.Tags
           .Include(tag => tag.Recipes)
           .ThenInclude(join => join.Recipe)
@@ -175,7 +158,10 @@ namespace RecipeBox.Controllers
         }
         else
         {
-          return RedirectToAction("Index");
+          var model = from m in _db.Recipes select m;
+          List<Recipe> allRecipes = new List<Recipe> { };
+          allRecipes = model.ToList();
+          return View(allRecipes);
         }
       }
       else
@@ -183,38 +169,6 @@ namespace RecipeBox.Controllers
         return RedirectToAction("Index");
       }
     }
-
-    // [HttpGet("/search")]
-    // public ActionResult Search(string search, string searchParam)
-    // {
-    //   if (!string.IsNullOrEmpty(search))
-    //   {
-    //     if (searchParam == "Book")
-    //     {
-    //       var model = from m in _db.Books select m;
-    //       model = model.Where(n => n.Title.Contains(search));
-    //       List<Book> matchesBook = new List<Book> { };
-    //       matchesBook = model.ToList();
-    //       return View(matchesBook);
-
-    //     }
-    //     else
-    //     {
-    //       var model = from m in _db.Authors select m;
-    //       model = model.Where(n => n.Name.Contains(search));
-    //       List<Author> matchesAuthor = new List<Author> { };
-    //       matchesAuthor = model.ToList();
-    //       return View(matchesAuthor);
-    //     }
-    //   }
-    //   else
-    //   {
-    //     var model = from m in _db.Books select m;
-    //     List<Book> allBooks = new List<Book> { };
-    //     allBooks = model.ToList();
-    //     return View(allBooks);
-    //   }
-    // }
 
   }
 }
