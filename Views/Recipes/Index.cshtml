@@ -7,22 +7,24 @@
 
 <h2>RecipeBox for @User.Identity.Name</h2>
 
-<h4>Search Your RecipeBox: </h4>
-
-@using (Html.BeginForm())
-{
-    <p>
-        Enter a Tag: @Html.TextBox("SearchString")  
-        <input type="submit" value="Search" /></p>
-}
-
+<form action="/sort" method = "get">
+  @Html.RadioButton("sortParam", "Rating")
+  <label for="sortParam">Sort by Rating</label>
+  @Html.RadioButton("sortParam", "Minutes")
+  <label for="sortParam">Sort by Prep Time</label>
+  <button type="submit">Sort My RecipeBox</button>
+</form>
 
 @if (Model.Any())
 {
   <ul>
     @foreach (Recipe recipe in Model)
     {
-      <p>@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId })</p>
+      <h5>@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId })</h5>
+      <ul>
+        <li>Rating: @Html.DisplayFor(modelRecipe => recipe.Rating)</li>
+        <li>Prep Time: @Html.DisplayFor(modelRecipe => recipe.Minutes) minutes</li>
+      </ul>
     }
   </ul>
 } 

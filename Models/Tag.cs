@@ -6,7 +6,7 @@ namespace RecipeBox.Models
   {
     public Tag()
     {
-      this.Recipes = new HashSet<RecipeTag>();
+      this.Recipes = new List<RecipeTag>();
     }
 
     public int TagId { get; set; }

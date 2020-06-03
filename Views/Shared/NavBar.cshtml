@@ -1,11 +1,40 @@
-<link rel="stylesheet" href="~/css/Styles.css" type="text/css" media="all"> 
+@* <link rel="stylesheet" href="~/css/Styles.css" type="text/css" media="all">  *@
 
-<img src='~/img/logo.png' alt="RecipeBox Logo" height="165px" width="165px" class="logo">
-<h3>RecipeBox</h3>
-  <ul class="nav nav-tabs" class="nav">
-    <li role="presentation"><a href="/">Home</a></li>
-    <li role="presentation"><a href="/recipes">My Recipe Box</a></li>
-    <li role="presentation"><a href='/recipes/create'>Add New Recipe</a></li>
-    <li role="presentation"><a href='/tags'>Recipe Tags</a></li>
-    <li role="presentation"><a href='/tags/create'>Create New Tag</a></li>
-  </ul>
+<div class = "row">
+  <div class = "col-md-2">
+    <img src='~/img/logo.jpg' alt="RecipeBox Logo" height="165px" width="165px" class="logo">
+  </div>
+  <div class = "col-md-3">
+    <h1>Recipe</h1>
+    <h1>Box</h1>
+  </div>
+  <div class = "col-md-3">
+    <form action="/search" method = "get">
+        <br>
+        <input type="text" name="search">
+        <br>
+        <button type="submit">Search My RecipeBox</button>
+        <br>
+        @Html.RadioButton("searchParam", "Tags")
+        <label for="searchParam">Search Tags</label>
+        <br>
+        @Html.RadioButton("searchParam", "Name")
+        <label for="searchParam">Search Recipe Names</label>
+      </form>
+  </div>
+</div>
+<div class="row">
+  <div class = "col-md-8">
+      <ul class="nav nav-tabs" class="nav">
+      <li role="presentation"><a href="/">Home</a></li>
+      <li role="presentation"><a href="/recipes">My Recipe Box</a></li>
+      <li role="presentation"><a href='/recipes/create'>Add New Recipe</a></li>
+      <li role="presentation"><a href='/tags'>Recipe Tags</a></li>
+      <li role="presentation"><a href='/tags/create'>Create New Tag</a></li>
+      <li role="presentation"><a href='/account/login'>Log In</a></li>
+    </ul>
+  </div>
+</div>
+    
+
+

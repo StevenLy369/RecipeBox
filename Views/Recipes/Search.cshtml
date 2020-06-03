@@ -1,0 +1,55 @@
+@{
+  Layout = "_Layout";
+}
+
+@using RecipeBox.Models;
+
+
+@if(Model[0].GetType() == typeof(Recipe))
+  {
+    <p>Recipes Matching Your Search:</p>
+    <li>
+      <ul>@foreach(Recipe recipe in Model)
+      {
+        <h5>@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId })</h5>
+        <ul>
+          <li>Rating: @Html.DisplayFor(modelRecipe => recipe.Rating)</li>
+          <li>Prep Time: @Html.DisplayFor(modelRecipe => recipe.Minutes) minutes</li>
+        </ul>
+      }
+      </ul>
+    </li>
+    }
+    else 
+    {
+    <p>Recipes Matching Your Search: </p>
+    @foreach(RecipeTag recipetag in Model)
+    {
+      <li>test</li>
+    }
+  }
+
+
+@* @model List<RecipeBox.Models.Recipe>
+
+<h2>Recipes in your RecipeBox that match your search!</h2>
+
+@if (Model.Any())
+{
+  <ul>
+    @foreach (Recipe recipe in Model)
+    {
+      <p>@Html.ActionLink($"{recipe.Name}", "Details", new { id = recipe.RecipeId })</p>
+    }
+  </ul>
+} 
+else
+{
+  <h3>Your RecipeBox doesn't have any recipes matching that search!</h3>
+} *@
+
+<p>@Html.ActionLink("Add new Recipe", "Create")</p>
+
+<p>@Html.ActionLink("Home", "Index", "Home")</p>
+
+<input type="submit" class="btn btn-default" value="Log out" />

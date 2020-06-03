@@ -133,18 +133,129 @@ namespace RecipeBox.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    public ViewResult Index(string sortOrder, string searchString)
+
+    [HttpGet("/search")]
+    public ActionResult Search(string search, string searchParam)
     {
-      ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-      ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-      var students = from s in db.Students
-                     select s;
-      if (!String.IsNullOrEmpty(searchString))
+
+      if (!string.IsNullOrEmpty(search))
       {
-        students = students.Where(s => s.LastName.Contains(searchString)
-                               || s.FirstMidName.Contains(searchString));
+        if (searchParam == "Tags")
+        {
+          // List<Tag> model2 = _db.Tags.Include(Tags => Tags.Recipes).ToList();
+          // Tag match2 = new Tag();
+          // List<Tag> matches2 = new List<Tag> { };
+          // foreach (Tag tag in model2)
+          // {
+          //   if (tag.Word.ToLower().Contains(search))
+          //   {
+          //     matches2.Add(tag);
+          //   }
+          // }
+          // return View(matches2);
+
+          // var model = from t in _db.Tags select t;
+          // model = model.Where(t => t.Word.Contains(search));
+          // List<Tag> matches = model.ToList();
+          // return View(matches);
+
+          var thisTag = _db.Tags
+          .Include(tag => tag.Recipes)
+          .ThenInclude(join => join.Recipe)
+          .FirstOrDefault(tag => tag.Word == search);
+          return View(thisTag.Recipes);
+
+        }
+        else if (searchParam == "Name")
+        {
+          var model = from r in _db.Recipes select r;
+          model = model.Where(r => r.Name.Contains(search));
+          List<Recipe> matches = model.ToList();
+          return View(matches);
+        }
+        else
+        {
+          return RedirectToAction("Index");
+        }
       }
-      return View(searchString);
+      else
+      {
+        return RedirectToAction("Index");
+      }
     }
+
+    // [HttpGet("/search")]
+    // public ActionResult Search(string search, string searchParam)
+    // {
+    //   if (!string.IsNullOrEmpty(search))
+    //   {
+    //     if (searchParam == "Book")
+    //     {
+    //       var model = from m in _db.Books select m;
+    //       model = model.Where(n => n.Title.Contains(search));
+    //       List<Book> matchesBook = new List<Book> { };
+    //       matchesBook = model.ToList();
+    //       return View(matchesBook);
+
+    //     }
+    //     else
+    //     {
+    //       var model = from m in _db.Authors select m;
+    //       model = model.Where(n => n.Name.Contains(search));
+    //       List<Author> matchesAuthor = new List<Author> { };
+    //       matchesAuthor = model.ToList();
+    //       return View(matchesAuthor);
+    //     }
+    //   }
+    //   else
+    //   {
+    //     var model = from m in _db.Books select m;
+    //     List<Book> allBooks = new List<Book> { };
+    //     allBooks = model.ToList();
+    //     return View(allBooks);
+    //   }
+    // }
+
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// public ViewResult Index(string searchString)
+//     {
+//       ViewBag.NameSortParm = String.IsNullOrEmpty() ? "name_desc" : "";
+//       var recipes = from r in _db.Recipes 
+//                      select r;
+//       if (!String.IsNullOrEmpty(searchString))
+//       {
+//         students = students.Where(r => r.LastName.Contains(searchString)
+//                                || r.FirstMidName.Contains(searchString));
+//       }
+//       return View(searchString);
+//     }

@@ -1,7 +1,17 @@
 body
 {
-    text-align: center;
-    align-content: center;
-    align-self: center;
-    text-decoration: none;
+    width: 60%;
+    /* text-align: left;
+    align-content: left;
+    align-self: left;
+    text-decoration: none; */
+    background-color: blueviolet;
+    color: red;
 }
+
+
+h1
+{
+    color: plum;
+}
+
