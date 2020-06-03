@@ -32,7 +32,7 @@
     @Html.CheckBoxFor(model => model.MadeIt)
 
     @Html.LabelFor(model => model.Rating)
-    @Html.EditorFor(model => model.Rating)
+    @Html.EditorFor(model => model.Rating, new { @type = "number", @class = "span5", @min = "1", @max="5" })
 
     <input type="submit" value="Save" />
 }

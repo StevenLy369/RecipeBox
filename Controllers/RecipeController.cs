@@ -169,7 +169,7 @@ namespace RecipeBox.Controllers
         return RedirectToAction("Index");
       }
     }
-
+    [HttpGet("/sort")]
     public ActionResult Sort(string sortParam)
     {
       List<Recipe> model = _db.Recipes.ToList();
